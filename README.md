@@ -8,6 +8,10 @@ Thanks a lot~
 
 
 
+**译者仅仅是编程和图形爱好者，如果翻译中有谬误之处，请指正~**
+
+
+
 ------
 
 #### Terms | 术语
@@ -73,10 +77,12 @@ SEM的基本思路是使用从片元上法向量获取的UV坐标（此坐标用
 
 一旦我们有了这两个向量，我们就能计算反射向量了。
 
-> 这个教程是基于**GLSL**语言编写着色器的。如果你使用了其他着色语言，并且该着色器没有`reflect()`函数，你可以使用相对应的表达式替代：`r = e - 2. * dot( n, e ) * n;`
+> 这个教程是基于**GLSL**语言编写着色器的。如果你使用了其他着色语言，并且该语言没有`reflect()`函数，你可以使用相对应的表达式替代：`r = e - 2. * dot( n, e ) * n;`
 
 
 ![](/images/st-spheremap.jpg)
+
+*上图为文章作者插入的一个公式的图片，没有理解此公式的意思。*
 
 我们获取向量，然后应用到公式中得到UV元组。
 
@@ -153,17 +159,19 @@ THREE.ClampToEdgeWrapping;
 
 材质准备完毕，已经可以指定给模型对象了。
 
+
+
 ------
 
 
 
 ## Assigning the material to an object | 将材质指定到几何体
 
-TBD
+使用SEM材质很适合表达多边形上的不同类型高光，比如：褶皱、凹凸、甚至缓慢的波动。但在立方体上的表现效果不理想。在球体上效果是完全没有变化的，SEM在一个球体上的效果和matCap纹理的平面投影的效果完全相同（译注：也就说球体上的效果就是matCap纹理贴图的效果，不论你旋转摄像机镜头到任何角度，都是这个显示效果，不会有任何变化）。使用环形结几何体测试这个着色器是一个好的选择。
 
 ![](/images/torus-different-materials.jpg)
 
-TBD
+你可能同样对[Creating a disorted sphere with Perlin Noise](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js)感兴趣。
 
 
 
@@ -172,26 +180,67 @@ TBD
 
 
 ## Phong (per-fragment) shading | Phong着色器（逐片元）
-TBD
+我并不认为逐片元着色是真正必要的，但可能也取决于被渲染的模型，特别是被渲染的模型是低多边形面片的（译注：模型顶点数很少，精度很低）。在这种情况下，你可能需要逐片元的去计算，而不是依靠GPU插值。下面是使用逐片元着色修改后顶点着色器：
 
+```
+// SEM shader, per-fragment
+// GLSL - vertex shader source
 
+varying vec3 e;
+varying vec3 n;
 
+void main() {
 
+  e = normalize( vec3( modelViewMatrix * vec4( position, 1.0 ) ) );
+  n = normalize( normalMatrix * normal );
 
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1. );
 
+}
+```
+
+注意我们没有计算`vN`元组，并使用`varying`传递到片元着色器中，而是使用`e`(Eye)和`n`(Normal)值替代，并传递到片元着色器中。下面是片元着色器的代码：
+
+```
+//SEM shader, per-fragment
+//GLSL - fragment shader source
+
+uniform sampler2D tMatCap;
+
+varying vec3 e;
+varying vec3 n;
+
+void main() {
+
+  vec3 r = reflect( e, n );
+  float m = 2. * sqrt( pow( r.x, 2. ) + pow( r.y, 2. ) + pow( r.z + 1., 2. ) );
+  vec2 vN = r.xy / m + .5;
+
+  vec3 base = texture2D( tMatCap, vN ).rgb;
+
+  gl_FragColor = vec4( base, 1. );
+
+}
+```
+
+所以，之前在顶点着色器中被计算的`reflection`和`vN`值，在被插值后传递到片元着色器中。而在现在，每个片元都会计算`reflection`和`vN`值。
 
 ------
 
 
 
 ## DEMO | 示例
-TBD
+![](images/demo-snapshot.jpg)
 
+> [Spherical Environment Mapping shader in action](https://www.clicktorelease.com/code/spherical-environment-mapping)
 
+这个示例展示三种不同的材质（**Matte red**，**Shiny black** 和 **Skin**），被用于三个不同的模型（**Torus  Knot**， **Bolb** 和 **Suzanne**）。他们的材质着色器是完全相同的，唯一的不同是matCap纹理贴图。这展现这种技术惊人的强大能力，它使模型对象的效果完全不同。
 
+勾选“Enable Phong(per-pixel) shading”复选框后，可以观察逐顶点和逐片元之前的差异。最值得关注的差异在模型对象的边缘处。
 
+**Torus Knot**是three.js的自带的几何体对象`THREE.TorusKnotGeometry`。**Bolb**是在`THREE.IcosahedronGeometry`几何体对象上通过Perlin噪音函数（混合了标准噪音和crinkly噪音）进行了顶点扰乱。**Suzanne**是Blender的吉祥物，并使用`THREE.SubdivisionModifier`进行细分后得到的一个更光滑模型。
 
-
+这个示例可以在OSX、Windows和Linux平台的Chrome、Firefox、Safari浏览器上正常工作。也能工作在Android平台的Chrome和Firefox。在移动端试一下，这个示例支持触摸事件。
 
 ------
 
@@ -199,4 +248,18 @@ TBD
 
 
 ## Conclusion | 小结
-TBD
+就这么多，SEM没什么那么神秘。它的关键之处在于使用优秀的模型和优秀的matCap纹理贴图。谷歌图片搜索、加上图像编辑软件、最好再有一个专业的美术，这就够了！
+
+可以使用这种技术进行更多尝试：
+
+- 在一个前置步骤中通过着色器创建matCap纹理；（译注：猜测此处是指用shader实现一个程序纹理作为matCap纹理贴图）
+- 结合多张纹理贴图，以模拟不同光源的影响；
+- 或尝试将matCap纹理应用到法线贴图中，并观察显示效果。
+
+
+
+
+
+**转载此文中文翻译请注明出处。**
+
+Interpreted by [Xie Huating](https://github.com/xiehuating/), 2019-04-22
