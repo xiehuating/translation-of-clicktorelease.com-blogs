@@ -1,22 +1,14 @@
 <br/>
 
-<br/>
-
 **Chinese translation version of articles on [https://www.clicktorelease.com/blog/](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/) by  [Jaume Sanchez](https://github.com/spite).**
-
-<br/>
 
 <br/>
 
 # Articles 
 
-<br/>
-
 ## Accomplished
 
-1.  [**Creating a Spherical Reflection/Environment Mapping shader**](/Creating a Spherical Reflection Environment Mapping shader.md)
-
-<br/>
+1.  [**Creating a Spherical Reflection/Environment Mapping shader**](Creating a Spherical Reflection Environment Mapping shader.md)
 
 ## To Do Lists
 
@@ -24,4 +16,10 @@
 2. [Experiments with Perlin noise](https://www.clicktorelease.com/blog/experiments-with-perlin-noise/)
 3. [Using hooks to make development of shaders a bit easier](https://www.clicktorelease.com/blog/using-hooks-for-easier-development-webgl-glsl/)
 4. [cru·ci·form study in architecture visualisation](https://www.clicktorelease.com/blog/making-of-cruciform/)
+5. [Real-Time Hatching.pdf](pdfs/hatching.pdf)
 
+
+
+<br/>
+
+<br/>
