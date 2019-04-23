@@ -8,7 +8,7 @@
 
 ## Accomplished
 
-1.  [**Creating a Spherical Reflection/Environment Mapping shader**]([https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Creating%20a%20Spherical%20Reflection%20Environment%20Mapping%20shader.md](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Creating a Spherical Reflection Environment Mapping shader.md))
+1.  [**Creating a Spherical Reflection/Environment Mapping shader**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Creating%20a%20Spherical%20Reflection%20Environment%20Mapping%20shader.md)
 
 ## To Do Lists
 
@@ -23,3 +23,4 @@
 <br/>
 
 <br/>
+
