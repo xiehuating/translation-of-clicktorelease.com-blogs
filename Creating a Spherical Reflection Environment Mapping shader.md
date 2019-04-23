@@ -46,7 +46,7 @@ Thanks a lot~
 * [**查看DEMO**](https://www.clicktorelease.com/code/spherical-environment-mapping/)
 * [**GitHub代码链接**](https://github.com/spite/spherical-environment-mapping)
 
-![](/images/Creating-a-SEM-shader/spherical-environment-mapping.jpg)
+![](/images/creating-a-sem-shader/spherical-environment-mapping.jpg)
 
 灯光是电脑生成图像最重要的部分之一。为了得到最终真实可信的展示效果，需要进行大量计算、设置以及微调工作。
 
@@ -62,9 +62,9 @@ SEM会使用特制的纹理贴图，这种贴图被叫做“lit spheres”或“
 
 这种球面贴图包含了在相机前方展示的所有元素，也就说此贴图包含了入射光线照射到的、面朝相机的球体表面（译注：模型背朝相机部分的反射因为相机没有拍摄到，所以贴图中也没有办法表达）。这也是它不能作为完美环境贴图（译注：原文为perfect environment map，应该指的是[Cube map](https://en.wikipedia.org/wiki/Cube_mapping)、[Equirectangular](https://en.wikipedia.org/wiki/Equirectangular_projection)这种捕获到360°的环境贴图方式）的原因：因为缺失了背朝相机部分的图像信息，所以这种反射不能跟随相机视角旋转而旋转。
 
-那么，我们所能模拟的就是相机和灯光固定不动、模型自身转动的显示效果（译注：类似淘宝商家拍摄商品展示照片，相机是放在三脚架上固定的，灯光也是固定的（或使用摄影专用灯箱），将产品放在一个转盘上，每拍一张照片底部的转盘就旋转一定角度。[见图示](/images/Creating-a-SEM-shader/rotate-example.gif)）。
+那么，我们所能模拟的就是相机和灯光固定不动、模型自身转动的显示效果（译注：类似淘宝商家拍摄商品展示照片，相机是放在三脚架上固定的，灯光也是固定的（或使用摄影专用灯箱），将产品放在一个转盘上，每拍一张照片底部的转盘就旋转一定角度。[见图示](/images/creating-a-sem-shader/rotate-example.gif)）。
 
-![](/images/Creating-a-SEM-shader/spherical-maps.jpg)
+![](/images/creating-a-sem-shader/spherical-maps.jpg)
 
 ------
 
@@ -83,7 +83,7 @@ SEM的基本思路是使用从片元上法向量获取的UV坐标（此坐标用
 > 这个教程是基于**GLSL**语言编写着色器的。如果你使用了其他着色语言，并且该语言没有`reflect()`函数，你可以使用相对应的表达式替代：`r = e - 2. * dot( n, e ) * n;`
 
 
-![](/images/Creating-a-SEM-shader/st-spheremap.jpg)
+![](/images/creating-a-sem-shader/st-spheremap.jpg)
 
 *译注：上图为文章作者插入的一个公式的图片，没有理解此公式的意思，并且整片文章中貌似也没有用到这个公式。*
 
@@ -172,7 +172,7 @@ THREE.ClampToEdgeWrapping;
 
 使用SEM材质很适合表达多边形上的不同类型高光，比如：褶皱、凹凸、甚至缓慢的波动。但在立方体上的表现效果不理想。在球体上效果是完全没有变化的，SEM在一个球体上的效果和matCap纹理的平面投影的效果完全相同（译注：也就说球体上的效果就是matCap纹理贴图的效果，不论你旋转摄像机镜头到任何角度，都是这个显示效果，不会有任何变化）。使用环面纽结几何体作为这个着色器测试模型是一个非常好的选择。
 
-![](/images/Creating-a-SEM-shader/torus-different-materials.jpg)
+![](/images/creating-a-sem-shader/torus-different-materials.jpg)
 
 > 你可能同样对[Creating a disorted sphere with Perlin Noise](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js)感兴趣。
 >
@@ -234,7 +234,7 @@ void main() {
 
 
 ## DEMO | 示例
-![](images/Creating-a-SEM-shader/demo-snapshot.jpg)
+![](images/creating-a-sem-shader/demo-snapshot.jpg)
 
 > [Spherical Environment Mapping shader in action](https://www.clicktorelease.com/code/spherical-environment-mapping)
 
