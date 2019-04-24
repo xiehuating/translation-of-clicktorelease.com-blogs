@@ -6,11 +6,11 @@ It's really an excellent tutorial to implement the matCap effect on  WebGL via T
 
 Thanks a lot~ 
 
-
+<br/>
 
 **如果翻译中有谬误之处，请不吝指正~**
 
-
+<br/>
 
 ------
 
@@ -27,13 +27,9 @@ Thanks a lot~
 - Texture：纹理
 - Map：贴图
 
-
-
 ------
 
-------
-
-
+<br/>
 
 # Creating a Spherical Reflection/Environment Mapping shader | 创建一个SEM着色器
 
@@ -52,9 +48,7 @@ Thanks a lot~
 
 球面反射/环境贴图技术（SEM）是一种模拟（译注：此处表达的是伪造、仿造的意思，表示这种技术并没有真正的使用着色器中的光照算法来实现，只是用一张静态的位图来模拟反射光。如果你还是理解不了，那么就理解为这就是一张最基础的颜色贴图，然后在颜色贴图上画上了反射光或反射环境。）光照算法中高光反射的快捷方法，在特定的使用场景中，甚至可以模拟完整光照实现效果。这种技术已经在三维软件中广泛应用，如： [Pixologic ZBrush](http://pixologic.com/zbrush/downloadcenter/library/) 和 [Luxology Modo](http://docs.luxology.com/modo/701/help/pages/shaderendering/ShaderItems/MatCap.html)。
 
-------
-
-
+<br/>
 
 ## LitSphere/MatCap texture maps | 材质捕获的纹理贴图
 
@@ -66,9 +60,7 @@ SEM会使用特制的纹理贴图，这种贴图被叫做“lit spheres”或“
 
 ![](/images/creating-a-sem-shader/spherical-maps.jpg)
 
-------
-
-
+<br/>
 
 ## Setting up the shader | 设置着色器
 
@@ -162,11 +154,7 @@ THREE.ClampToEdgeWrapping;
 
 材质准备完毕，已经可以指定给模型对象了。
 
-
-
-------
-
-
+<br/>
 
 ## Assigning the material to an object | 将材质指定到几何体对象
 
@@ -177,11 +165,7 @@ THREE.ClampToEdgeWrapping;
 > 你可能同样对[Creating a disorted sphere with Perlin Noise](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js)感兴趣。
 >
 
-
-
-------
-
-
+<br/>
 
 ## Phong (per-fragment) shading | Phong（逐片元）着色
 我并不认为逐片元着色是真正必要的，但可能也取决于被渲染的模型，特别是被渲染的模型是低多边形面片的（译注：模型顶点数很少，精度很低）。在这种情况下，你可能需要逐片元的去计算，而不是依靠GPU插值。下面是使用逐片元着色修改后顶点着色器：
@@ -229,9 +213,7 @@ void main() {
 
 所以，之前在顶点着色器中被计算的`reflection`和`vN`值，在被插值后传递到片元着色器中。而在现在，每个片元都会计算`reflection`和`vN`值。
 
-------
-
-
+<br/>
 
 ## DEMO | 示例
 ![](images/creating-a-sem-shader/demo-snapshot.jpg)
@@ -246,9 +228,7 @@ void main() {
 
 这个示例可以在OSX、Windows和Linux平台的Chrome、Firefox、Safari浏览器上正常工作。也能工作在Android平台的Chrome和Firefox。在移动端试一下，这个示例支持触摸事件。
 
-------
-
-
+<br/>
 
 
 ## Conclusion | 小结
@@ -257,25 +237,9 @@ void main() {
 可以基于这种SEM的技术进行更多尝试探索：
 
 - 在一个前置步骤中通过着色器创建matCap纹理；（译注：猜测此处是指用shader实现一个程序纹理作为matCap纹理贴图）
+
 - 结合多张纹理贴图，以模拟不同光源的影响；
+
 - 或尝试将matCap纹理应用到法线贴图中，并观察显示效果。
 
-------
-
-------
-
-<br/>
-
-<br/>
-
-<br/>
-
-Interpreted by [Xie Huating](https://github.com/xiehuating/), 2019-04-22
-
-转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/) 与 [**翻译出处**](https://github.com/xiehuating/creating-spherical-environment-mapping-shader)
-
-<br/>
-
-<br/>
-
-<br/>
+  <br/>
