@@ -12,7 +12,7 @@
 
 #### Terms | 术语
 
-- 
+- Perlin noise：
 
 ------
 
@@ -30,6 +30,10 @@
 * [**GitHub代码链接**](<https://github.com/spite/vertex-displacement-noise-3d-webgl-glsl-three-js>)
 
 ![](/images/vertex-displacement-with-a-noise function/perlin-explosion.jpg)
+
+这篇教程展示了创作一个带有形体变形动画的步骤：使用一个球体作为基本几何体，再使用perlin噪点对球体顶点位置扰乱。同时也教授了如何在扰乱上添加更多的变化，以及如何着色。本文在[Fireball explosion](https://www.clicktorelease.com/code/perlin/explosion.html)、以及[Experiments with Perlin Noise Series](https://www.clicktorelease.com/blog/experiments-with-perlin-noise)中的部分内容为基础写就。
+
+
 
 
 

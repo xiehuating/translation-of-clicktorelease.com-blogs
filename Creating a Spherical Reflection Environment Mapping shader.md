@@ -237,9 +237,25 @@ void main() {
 可以基于这种SEM的技术进行更多尝试探索：
 
 - 在一个前置步骤中通过着色器创建matCap纹理；（译注：猜测此处是指用shader实现一个程序纹理作为matCap纹理贴图）
-
 - 结合多张纹理贴图，以模拟不同光源的影响；
-
 - 或尝试将matCap纹理应用到法线贴图中，并观察显示效果。
 
-  <br/>
+<br/>
+
+------
+
+<br/>
+
+<br/>
+
+<br/>
+
+Interpreted by [Xie Huating](https://github.com/xiehuating/), 2019-04-22
+
+转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/) 与 [**翻译出处**](https://github.com/xiehuating/creating-spherical-environment-mapping-shader)
+
+<br/>
+
+<br/>
+
+<br/>
