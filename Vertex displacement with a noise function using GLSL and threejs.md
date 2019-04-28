@@ -2,17 +2,23 @@
 
 **This article is a Chinese translation version of [Vertex displacement with a noise function using GLSL and three.js](<https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js/>) by  [Jaume Sanchez](https://github.com/spite).**
 
-
+<br/>
 
 **如果翻译中有谬误之处，请不吝指正~**
 
-
+<br/>
 
 ------
 
 #### Terms | 术语
 
-- Perlin noise：
+- Perlin noise: 
+- Vertex: 
+- Fragment: 
+- attribute变量：只能出现在顶点着色器中，只能被声明为全局变量，被用来表示逐顶点的信息。
+- uniform变量：可以用在顶点着色器和片元着色器中，且必须是全局变量。
+- varying变量：必须是全局变量，它的任务是从顶点着色器向片元着色器传输数据。
+- vec2：GLSL的矢量类型，具有2个浮点数元素的矢量
 
 ------
 
@@ -49,7 +55,7 @@
 
 以下是起步阶段的代码：
 
-```
+```html
 // Basic page | 基础页面
 // HTML - index.html | index.html页面中的HTML代码
 
@@ -83,7 +89,7 @@
 
 然后把以下JavaScript代码添加到id为`mainCode`的`script`标签中。
 
-```
+```javascript
 // Three.js boilerplate | Three.js引用
 // JavaScript - index.html | index.html页面中的JavaScript代码
 
@@ -148,10 +154,87 @@ function render() {
 
 这样就建立了一个场景，一个位于场景中央、半径为20、由200x200个片段组成的线框球体。一个相机从100个单位以外观察它。尝试更改球体中的半径或线段，或将相机或网格移动到其他位置。
 
-[**点击查看第一步示例**](https://www.clicktorelease.com/code/vertex-displacement-noise-3d-webgl-glsl-three-js/creating-scene-mesh-camera.html)
+> [**点击查看第一阶段示例**](https://www.clicktorelease.com/code/vertex-displacement-noise-3d-webgl-glsl-three-js/creating-scene-mesh-camera.html)
 
 ![](/images/vertex-displacement-with-a-noise-function/the-first-step.jpg)
 
 <br/>
 
 ## Creating our custom shader | 创建自定义着色器
+
+如果我们想要玩转渲染，我们必须要学会创建自己的着色器。自定义着色器将允许我们编写所期望的顶点和片元着色器的行为方式。我们需要将`material`从标准的`THREE.MeshBasicMaterial`更改为`THREE.ShaderMaterial`。 `THREE.ShaderMaterial`有一些基本参数：`vertexShader`，`fragmentShader`和`uniforms`。
+
+1. `vertexShader`：顶点操作的GLSL代码。
+2. `fragmentShader`：片元操作的GLSL代码。
+3. `uniforms`：顶点和片元着色器共享的变量所组成的对象。
+
+将创建`material`的代码行（*译注：上面代码中的`THREE.MeshBasicMaterial`*）使用以下代码替换：
+
+```javascript
+// Custom basic shader material | 自定义基本着色器材质
+// JavaScript | JavaScript
+
+material = new THREE.ShaderMaterial( {
+  vertexShader: document.getElementById( 'vertexShader' ).textContent,
+  fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+} );
+```
+
+上面这段代码从`script`标签中获取着色器代码，并将其分配到对应的着色器。Three.js会用它们组成一个完整的着色器，并传递给WebGL驱动程序进行编译。然后它就可以使用了。
+
+将以下代码添加到id为`vertexShader`的`script`标签中。
+
+```c
+// Basic vertex shader code | 基本顶点着色器代码
+// GLSL | GLSL
+
+varying vec2 vUv;
+
+void main() {
+    
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    
+}
+```
+
+此着色器几乎是最基本的顶点着色器。它接收一个`attribute`变量（专门给顶点着色器传递参数）uv（二维向量、或vec2类型，指定在纹理的0到1空间内读哪个纹素），并使用`varying`变量（可以在顶点着色器和片元着色器之间共享或传递的参数）vUv（另一个vec2类型）将它传递到片元着色器。它还接收了顶点position属性（position，是指在对象坐标中顶点原始位置的三维向量），并执行变换以将顶点放置到眼坐标系中。*当使用像`SphereGeometry`或`IcosahedronGeometry`这样的基础几何体创建网格时，这两个值（译注：此处指`attribute`变量uv，以及`attribute`变量position。）会由three.js自动创建并且传递给顶点着色器。所以你无需担心任何事情。*
+
+将以下代码添加到id为`fragmentShader`的`script`标签中。
+
+```c
+// Basic fragment shader code | 基本片元着色器代码
+// GLSL | GLSL
+
+varying vec2 vUv;
+
+void main() {
+
+  // colour is RGBA: u, v, 0, 1
+  gl_FragColor = vec4( vec3( vUv, 0. ), 1. );
+
+}
+```
+
+这个着色器也很简单。获取给定片元的UV坐标（由顶点着色器设置为vUV并由GPU为每个片段插值），并将片元的UV坐标用作片元颜色的第一和第二个分量。*我们可以使用纯色作为片元着色器的输出，但使用纹理坐标对对象着色可以更容易地看到项目进展情况。*
+
+> [**点击查看第二阶段示例**](https://www.clicktorelease.com/code/vertex-displacement-noise-3d-webgl-glsl-three-js/creating-custom-shader.html)
+
+![](/images/vertex-displacement-with-a-noise-function/the-second-step.jpg)
+
+<br/>
+
+## Let's make some noise! | 制造噪点
+
+现在，终于到了有趣的部分！球体是精确的、完美无瑕的，但看上去很乏味；我们将扰乱顶点位置以获得有趣的形状：土豆，团块，星星，爆炸……
+
+
+
+
+
+
+
+
+
+
+

@@ -84,8 +84,8 @@ SEM的基本思路是使用从片元上法向量获取的UV坐标（此坐标用
 这是顶点着色器的代码：
 
 ```javascript
-//SEM shader, per-vertex
-//GLSL - Vertex shader source
+//SEM shader, per-vertex | SEM着色器，逐顶点
+//GLSL - Vertex shader source | GLSL-顶点着色器源码
 
 varying vec2 vN;
 
@@ -112,8 +112,8 @@ void main() {
 片元着色器获取了UV元组经过GPU插值后的值，然后使用它查找matCap纹理上对应的颜色值。这是代码：
 
 ```javascript
-//SEM shader, per-vertex
-//GLSL - Fragment shader source
+//SEM shader, per-vertex | SEM着色器，逐顶点
+//GLSL - Fragment shader source | GLSL-片元着色器源码
 
 uniform sampler2D tMatCap;
 
@@ -130,8 +130,8 @@ void main() {
 在JavaScript代码，使用了thrss.js创建着色器材质。实例化了一个新的`THREE.ShaderMaterial`，引用了上文定义的顶点着色器和片元着色器脚本，在一个材质`uniform`对象中使用了matCap贴图。以防万一，将水平和垂直的纹理包裹模式设置为`THREE.ClampToEdgeWrapping`，纹理边缘不会被卷曲（译注：猜测这边作者的意思是纹理不会被重复铺贴或者镜像铺贴，其实根据three.js开发文档中的描述，`.wrapS`和`.wrapT`的默认值就是`THREE.ClampToEdgeWrapping`）。这是代码：
 
 ```javascript
-//Creating THREE.js material
-//JavaScript - index.html
+//Creating THREE.js material | 创建THREE.js材质
+//JavaScript - index.html | JavaScript-index.html
 
 var material = new THREE.ShaderMaterial( {
 
@@ -170,9 +170,9 @@ THREE.ClampToEdgeWrapping;
 ## Phong (per-fragment) shading | Phong（逐片元）着色
 我并不认为逐片元着色是真正必要的，但可能也取决于被渲染的模型，特别是被渲染的模型是低多边形面片的（译注：模型顶点数很少，精度很低）。在这种情况下，你可能需要逐片元的去计算，而不是依靠GPU插值。下面是使用逐片元着色修改后顶点着色器：
 
-```
-// SEM shader, per-fragment
-// GLSL - vertex shader source
+```javascript
+// SEM shader, per-fragment | SEM着色器，逐片元
+// GLSL - vertex shader source | GLSL-顶点着色器源码
 
 varying vec3 e;
 varying vec3 n;
@@ -189,9 +189,9 @@ void main() {
 
 注意我们没有计算`vN`元组，并使用`varying`传递到片元着色器中，而是使用`e`(Eye)和`n`(Normal)值替代，并传递到片元着色器中。下面是片元着色器的代码：
 
-```
-//SEM shader, per-fragment
-//GLSL - fragment shader source
+```javascript
+//SEM shader, per-fragment | SEM着色器，逐片元
+//GLSL - fragment shader source | GLSL-片元着色器源码
 
 uniform sampler2D tMatCap;
 
