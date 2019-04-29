@@ -9,7 +9,7 @@
 ## Accomplished
 
 1.  [**Creating a Spherical Reflection/Environment Mapping shader**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Creating%20a%20Spherical%20Reflection%20Environment%20Mapping%20shader.md)
-2.  [**Vertex displacement with a noise function using GLSL and three.js**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Vertex displacement with a noise function using GLSL and threejs.md)
+2.  [**Vertex displacement with a noise function using GLSL and three.js**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Vertex%20displacement%20with%20a%20noise%20function%20using%20GLSL%20and%20threejs.md)
 
 <br/>
 
