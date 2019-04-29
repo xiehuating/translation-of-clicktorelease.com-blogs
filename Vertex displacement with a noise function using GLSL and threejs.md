@@ -340,7 +340,7 @@ void main() {
 
 离最终效果越来越近了。它开始看起来像是那么回事了。
 
-让我们添加一些颜色。我们可以编写一个函数，它使用几个插值器来创建一个从暗到亮的渐变，由红色，橙色和亮黄色组成。如果有其他选择，我通常不喜欢花费不必要的时间处理资产。在这种情况下，我去google images，寻找爆炸图片，选择我最喜欢的图片，然后从图片上切割[一片具有正确渐变的图像](/images/vertex-displacement-with-a-noise-function/explosion.jpg)。
+让我们添加一些颜色。我们可以编写一个函数，它使用几个插值器来创建一个从暗到亮的渐变，由红色，橙色和亮黄色组成。如果有其他选择，我通常不喜欢花费不必要的时间处理资产。在这种情况下，我去google images，寻找爆炸图片，选择我最喜欢的图片，然后从图片上切割[一片具有正确渐变的图像](/images/vertex-displacement-with-a-noise-function/explosion.png)。
 
 现在我们有了爆炸的图像，我们必须将它传递给着色器才能使用它。这是在JavaScript中完成的，我们必须修改我们之前创建的`ShaderMaterial`。我们添加一个定义纹理的`uniform`（2D采样器）。我们还添加了一个时间系数来为爆炸制作动画。记住所有用于`uniform`类型的three.js约定不是一件容易的事：这是一个好帮手：[Uniform types](https://github.com/mrdoob/three.js/wiki/Uniforms-types)*（译注：原文中的此链接已经失效，可以访问[这个页面](https://threejs.org/docs/#api/en/core/Uniform)查询uniform types）*。
 
