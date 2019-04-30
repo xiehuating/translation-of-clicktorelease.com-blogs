@@ -156,11 +156,11 @@ function render() {
 
 这样就建立了一个场景，一个位于场景中央、半径为20、由200x200个片段组成的线框球体。一个相机从z轴100个单位处观察它。*尝试更改球体中的半径或线段，或将相机或网格移动到其他位置。*
 
-</br>
+<br/>
 
 > [**点击查看第一阶段示例**](https://www.clicktorelease.com/code/vertex-displacement-noise-3d-webgl-glsl-three-js/creating-scene-mesh-camera.html)
 
-</br>
+<br/>
 
 ![](/images/vertex-displacement-with-a-noise-function/the-first-step.jpg)
 
@@ -224,11 +224,11 @@ void main() {
 
 这个着色器也很简单。获取给定片元的UV坐标（顶点着色器中命名为`vUv`，并由GPU为每个片段插值），并将片元的UV坐标用作片元颜色的第一和第二个分量。*我们可以使用纯色作为片元着色器的输出，但使用纹理坐标给对象着色可以更容易地看到项目进展情况。*
 
-</br>
+<br/>
 
 > [**点击查看第二阶段示例**](https://www.clicktorelease.com/code/vertex-displacement-noise-3d-webgl-glsl-three-js/creating-custom-shader.html)
 
-</br>
+<br/>
 
 ![](/images/vertex-displacement-with-a-noise-function/the-second-step.jpg)
 
@@ -326,11 +326,11 @@ void main() {
 }
 ```
 
-</br>
+<br/>
 
 > [**点击查看第三阶段示例**](https://www.clicktorelease.com/code/vertex-displacement-noise-3d-webgl-glsl-three-js/lets-make-some-noise.html)
 
-</br>
+<br/>
 
 ![](/images/vertex-displacement-with-a-noise-function/the-third-step.jpg)
 
