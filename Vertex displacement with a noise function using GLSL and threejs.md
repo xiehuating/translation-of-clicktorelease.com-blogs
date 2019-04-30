@@ -28,7 +28,7 @@
 
 # Vertex displacement with a noise function using GLSL and three.js | 在GLSL和three.js中通过噪点函数实现顶点位移
 
-文章写于2012年12月10日
+文章发表于2012年12月10日
 
 阅读时间：10分钟
 

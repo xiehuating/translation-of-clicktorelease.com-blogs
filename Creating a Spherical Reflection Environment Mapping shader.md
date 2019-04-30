@@ -33,7 +33,7 @@ Thanks a lot~
 
 # Creating a Spherical Reflection/Environment Mapping shader | 创建一个SEM着色器
 
-文章写于2014年4月16日
+文章发表于2014年4月16日
 
 阅读时间：5分钟
 
