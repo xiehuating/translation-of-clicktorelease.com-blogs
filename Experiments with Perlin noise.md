@@ -66,7 +66,7 @@
 
 ## That's all! | 就这样！
 
-您可能还对[**Vertex displacement with a noise function using GLSL and three.js**](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js)（译注：[此文中文翻译](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Vertex%20displacement%20with%20a%20noise%20function%20using%20GLSL%20and%20threejs.md)）感兴趣，这篇博文详细介绍了如何创建此效果。
+您可能还对[**Vertex displacement with a noise function using GLSL and three.js**](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js)*（译注：[此文中文翻译](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Vertex%20displacement%20with%20a%20noise%20function%20using%20GLSL%20and%20threejs.md)）*感兴趣，这篇博文详细介绍了如何创建此效果。
 
 <br/>
 
@@ -80,7 +80,7 @@
 
 Interpreted by [Xie Huating](https://github.com/xiehuating/), 2019-04-22
 
-转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/) 与 [**翻译出处**](https://github.com/xiehuating/creating-spherical-environment-mapping-shader)
+转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/experiments-with-perlin-noise/) 与 [**翻译出处**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Experiments%20with%20Perlin%20noise.md)
 
 <br/>
 

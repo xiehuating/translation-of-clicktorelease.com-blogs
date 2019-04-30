@@ -39,13 +39,13 @@
 
 ![](/images/vertex-displacement-with-a-noise-function/perlin-explosion.jpg)
 
-这篇教程展示了创作一个带有形体变形动画的过程：使用一个球体作为基本几何体，使用perlin噪点对球体顶点位置扰乱。同时也教授了如何在扰乱上添加更多的变化以及如何添加着色。本文在[Fireball explosion](https://www.clicktorelease.com/code/perlin/explosion.html)示例，以及[Experiments with Perlin Noise Series](https://www.clicktorelease.com/blog/experiments-with-perlin-noise)示例中的部分内容为基础写就。
+这篇教程展示了创作一个带有形体变形动画的过程：使用一个球体作为基本几何体，使用perlin噪点对球体顶点位置扰乱。同时也教授了如何在扰乱上添加更多的变化以及如何添加着色。本文在[Fireball explosion](https://www.clicktorelease.com/code/perlin/explosion.html)示例为基础写就，此示例是[Experiments with Perlin Noise Series](https://www.clicktorelease.com/blog/experiments-with-perlin-noise)博文中的部分内容。
 
-我使用[three.js](https://github.com/mrdoob/three.js/)创建几何体并配置场景，但GLSL代码可以使用任何其他WebGL或OpebGl的库。我可以肯定它也能相当直接的转换成HLSL语言。
+我使用[three.js](https://github.com/mrdoob/three.js/)创建几何体并配置场景，但GLSL代码可以在任何其他WebGL/OpenGL的库中运行。我可以肯定它也能相当直接的转换成HLSL代码。
 
 ![](/images/vertex-displacement-with-a-noise-function/keyboard.svg)
 
-我将在本教程中假定你已经掌握了一定WebGl的知识或其他你偏爱的同类3D库的知识。我将使用three.js编写必要的代码来配置场景，但不会做过多的讲解。[**市面上已经有很多此类例子和文档了。**](https://threejs.org/)_您可能需要先查看本文的示例链接，我会尽量保持这些示例非常基础。_
+我将在本教程中假定你已经掌握了一定程度的WebGL知识或其他你偏爱的同类3D库的知识。在这个示例中，我将使用three.js。我使用three.js编写必要的代码来配置场景，但不会做过多的讲解。[**市面上已经有很多此类示例和文档了。**](https://threejs.org/)_您可能需要先查看本文的示例链接，我会尽量保证本示例非常基础。_
 
 <br/>
 
@@ -75,15 +75,15 @@
   <script src="js/three.min.js"></script>
 
   <script type="x-shader/x-vertex" id="vertexShader">
-  // Put the Vertex Shader code here
+  // Put the Vertex Shader code here | 在这里放置顶点着色器代码
   </script>
 
   <script type="x-shader/x-vertex" id="fragmentShader">
-  // Put the Fragment Shader code here
+  // Put the Fragment Shader code here | 在这里放置片元着色器代码
   </script>
 
   <script type="text/javascript" id="mainCode">
-  // Put the main code here
+  // Put the main code here | 在这里放置主代码，即threejs代码
   </script>
 
 </html>
@@ -105,14 +105,14 @@ var container,
 
 window.addEventListener( 'load', function() {
 
-  // grab the container from the DOM
+  // grab the container from the DOM | 从DOM中获取id为container的div
   container = document.getElementById( "container" );
 
-  // create a scene
+  // create a scene | 创建一个场景
   scene = new THREE.Scene();
 
-  // create a camera the size of the browser window
-  // and place it 100 units away, looking towards the center of the scene
+  // create a camera the size of the browser window | 创建一个浏览器窗口大小的摄像机
+  // and place it 100 units away, looking towards the center of the scene | 放置在z轴坐标100个单位处，摄像机会默认看向场景的中心
   camera = new THREE.PerspectiveCamera(
     fov,
     window.innerWidth / window.innerHeight,
@@ -121,20 +121,20 @@ window.addEventListener( 'load', function() {
   );
   camera.position.z = 100;
 
-  // create a wireframe material
+  // create a wireframe material | 创建一个线框材质
   material = new THREE.MeshBasicMaterial( {
     color: 0xb7ff00,
     wireframe: true
   } );
 
-  // create a sphere and assign the material
+  // create a sphere and assign the material | 创建一个球体并给它指定材质
   mesh = new THREE.Mesh(
     new THREE.IcosahedronGeometry( 20, 4 ),
     material
   );
   scene.add( mesh );
 
-  // create the renderer and attach it to the DOM
+  // create the renderer and attach it to the DOM | 创建一个渲染器并将它添加到DOM中
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.setPixelRatio( window.devicePixelRatio );
@@ -147,14 +147,14 @@ window.addEventListener( 'load', function() {
 
 function render() {
 
-  // let there be light
+  // let there be light | 渲染输出场景
   renderer.render( scene, camera );
   requestAnimationFrame( render );
 
 }
 ```
 
-这样就建立了一个场景，一个位于场景中央、半径为20、由200x200个片段组成的线框球体。一个相机从100个单位以外观察它。尝试更改球体中的半径或线段，或将相机或网格移动到其他位置。
+这样就建立了一个场景，一个位于场景中央、半径为20、由200x200个片段组成的线框球体。一个相机从z轴100个单位处观察它。*尝试更改球体中的半径或线段，或将相机或网格移动到其他位置。*
 
 </br>
 
@@ -204,7 +204,7 @@ void main() {
 }
 ```
 
-此着色器几乎是最基本的顶点着色器。它接收一个`attribute`变量（专门给顶点着色器传递参数）uv（二维向量、或vec2类型，指定在纹理的0到1空间内读哪个纹素），并使用`varying`变量（可以在顶点着色器和片元着色器之间共享或传递的参数）vUv（另一个vec2类型）将它传递到片元着色器。它还接收了顶点position属性（position，是指在对象坐标中顶点原始位置的三维向量），并执行变换以将顶点放置到眼坐标系（ eye coordinates）中。*当使用像`SphereGeometry`或`IcosahedronGeometry`这样的基础几何体创建网格时，这两个值（译注：此处指`attribute`变量uv，以及`attribute`变量position。）会由three.js自动创建并且传递给顶点着色器。所以你无需担心任何事情。*
+此着色器几乎是最基本的顶点着色器。它接收一个名称为`uv`（二维向量、或vec2类型，指定在纹理的0到1空间内读哪个纹素）的`attribute`变量（`attribute`专门给顶点着色器传递参数），并使用名为`vUv`（另一个vec2类型）的`varying`变量（`varying`是可以在顶点着色器和片元着色器之间共享或传递的参数）将它传递到片元着色器。它还接收了顶点`position`属性（`position`是指在对象坐标中顶点原始位置的三维向量），并执行变换以将顶点放置到眼坐标系（ eye coordinates）中。*当使用像`SphereGeometry`或`IcosahedronGeometry`这样的基础几何体创建网格时，这两个值（译注：此处指`attribute`变量`uv`，以及`attribute`变量`position`。）会由three.js自动创建并且传递给顶点着色器。所以你无需担心任何事情。*
 
 将以下代码添加到id为`fragmentShader`的`script`标签中。
 
@@ -216,13 +216,13 @@ varying vec2 vUv;
 
 void main() {
 
-  // colour is RGBA: u, v, 0, 1
+  // colour is RGBA: u, v, 0, 1 | RGBA颜色值为：u，v，0，1
   gl_FragColor = vec4( vec3( vUv, 0. ), 1. );
 
 }
 ```
 
-这个着色器也很简单。获取给定片元的UV坐标（由顶点着色器设置为vUV并由GPU为每个片段插值），并将片元的UV坐标用作片元颜色的第一和第二个分量。*我们可以使用纯色作为片元着色器的输出，但使用纹理坐标对对象着色可以更容易地看到项目进展情况。*
+这个着色器也很简单。获取给定片元的UV坐标（顶点着色器中命名为`vUv`，并由GPU为每个片段插值），并将片元的UV坐标用作片元颜色的第一和第二个分量。*我们可以使用纯色作为片元着色器的输出，但使用纹理坐标给对象着色可以更容易地看到项目进展情况。*
 
 </br>
 
@@ -238,23 +238,23 @@ void main() {
 
 现在，终于到了有趣的部分！球体是精确的、完美无瑕的，但又极其乏味；我们将扰乱顶点位置以获得有趣的形状：土豆，团块，星星，爆炸……
 
-我们的主要思路是沿着法线方向扰乱每个顶点位置。想象一下，一些线从球体的中心出发连接至每个顶点，每个顶点都有这样的一条线。最初，所有这些线都是相同的长度（球体的半径）。如果我们使一些线变长，一些线变短，我们将会获得一个有趣的、被扰乱后的网格。
+我们的主要思路是：沿着法线方向扰乱每个顶点位置。想象一下，一些线从球体的中心点出发连接至每个顶点，每个顶点都有这样的一条线。最初，所有这些线都是相同的长度（也就是球体的半径）。如果我们使一些线变长，一些线变短，我们将会获得一个有趣的、被扰乱后的网格。
 
 ![](/images/vertex-displacement-with-a-noise-function/modifying-point-over-normal.jpg)
 
-随机是一个好东西，但也会造成混乱，以至于让人讨厌。我们希望扰乱有些随机但又是可控的，这里我们再次用到[Perlin Noise](https://en.wikipedia.org/wiki/Perlin_noise)来挽回局面。
+随机是一个好东西，但也会造成混乱，以至于让人讨厌。我们希望扰乱有些随机但又在可控范围内，这里我们再次用到[Perlin Noise](https://en.wikipedia.org/wiki/Perlin_noise)来挽回局面。
 
-我将使用[ashima's webgl-noise](https://github.com/ashima/webgl-noise)，这是一套极其出色且WebGL兼容的过程噪点着色程序（Procedural Noise Shader Routines）。我不打算在这里复制使用整个代码库。你必须将噪点代码添加进顶点着色器，这个噪点代码库的注释是这样说的。我们将使用[Classic Noise 3D](https://github.com/ashima/webgl-noise/blob/master/src/classicnoise3D.glsl)。*在着色器中使用Perlin Noise有很多选择：标准实现，简单实现，噪点纹理。选择哪一个取决于噪点的用处和要求。其中的规则是越复杂计算越慢，如果您需要大量噪点值，你可以使用噪点纹理以便快速查找。*
+我将使用[ashima's webgl-noise](https://github.com/ashima/webgl-noise)，这是一套极其出色且WebGL兼容的过程噪点着色程序（Procedural Noise Shader Routines）。我不打算在这里复制使用整个代码库。你必须将噪点代码添加进顶点着色器，这个噪点代码库的注释是这样说的。我们将使用[Classic Noise 3D](https://github.com/ashima/webgl-noise/blob/master/src/classicnoise3D.glsl)。*在着色器中使用Perlin Noise有很多选择：标准实现，简单实现（译注：这边不清楚这两种实现的区别），以及噪点纹理。选择哪一个取决于噪点的用处和要求。其中的规则是越复杂计算越慢，如果您需要大量噪点值，你可以使用噪点纹理以便快速查找。*
 
 > ***Random is good, but also chaotic and not very appealing.***<br/>***随机是一个好东西，但这也会造成混乱，以至于让人讨厌。***
 
-让我们沿着法线方向扰乱顶点：我们想要将法线乘以一些缩放系数，使其可以缩放（从中心到顶点的线缩短或伸长，因为它定义了顶点位置，顶点自身向内或向外移动）。这就是我们获得噪点值的地方。噪点的坐标基于被修改前的法线，并且噪点值被调节到了适合期望的比例。我没有直接使用噪点函数（noise function），而是使用湍流函数（turbulence function）替代，由Ken Perlin提供，它创造了非常有趣的形状。*我们鼓励您尝试不同的噪点函数，并为噪点函数提供不同的参数和周期。*
+让我们沿着法线方向扰乱顶点：我们想要将法线乘以一些缩放系数，使其可以缩放（从中心到顶点的线缩短或伸长，因为它定义了顶点位置，顶点自身向内或向外移动）。这就是我们应用噪点值的地方。噪点的坐标基于被修改前的法线，并且噪点值被调节到了适合期望的比例。我没有直接使用噪点函数（noise function），而是使用湍流函数（turbulence function）替代，由Ken Perlin提供，它创造了非常有趣的形状。*我们鼓励您尝试不同的噪点函数，并为噪点函数提供不同的参数和周期。*
 
 我做了一个附加的变形，添加了一个基于较大噪点（低频噪点）的系数，以扰乱球体形状。*尝试更改噪点中不同的值和`b`（译注：这些参数在顶点着色器中），以查看每个值如何影响生成的形状。*
 
 处理噪点函数时非常重要之处在于：您通常会传递具有时间连贯性的参数，因为您不希望网格突然改变每帧的形状。这可以通过使用一些值来实现，它对于顶点或片元的每一帧都是相同的：它可以是`attribute`或`uniform`，但我通常喜欢使用UV坐标，位置或法线。*这通常在转换为眼坐标（eye coordinates）之前。*
 
-我将噪点存储，用来伪造一个环境遮挡系数。这在渲染形状时非常有用，可以在凹陷区域上突出凸起区域*（译注：原文为“to highlight raised regions agains sunken regions”，原作者可能把against拼错成了agains）*。
+我将噪点存储，用来伪造一个环境遮挡系数。这在渲染形状时非常有用，可以在凹陷区域上突出凸起区域*（译注：原文为to highlight raised regions agains sunken regions，原作者可能把against拼错成了agains）*。
 
 现在我们使用位移系数在法线方向上移动顶点，以此来计算顶点的新位置：就像取顶点的原始位置并加上法线乘以噪点一样简单。
 
@@ -340,9 +340,9 @@ void main() {
 
 离最终效果越来越近了。它开始看起来像是那么回事了。
 
-让我们添加一些颜色。我们可以编写一个函数，它使用几个插值器来创建一个从暗到亮的渐变，由红色，橙色和亮黄色组成。如果有其他选择，我通常不喜欢花费不必要的时间处理资产。在这种情况下，我去google images，寻找爆炸图片，选择我最喜欢的图片，然后从图片上切割[一片具有正确渐变的图像](/images/vertex-displacement-with-a-noise-function/explosion.png)。
+让我们添加一些颜色。我们可以编写一个函数，它使用几个插值器来创建一个从暗到亮的渐变，由红色，橙色和亮黄色组成。如果有其他选择，我通常不喜欢花费不必要的时间处理资产（译注：作者的意思用GLSL写这个效果会很花时间，不如用一张图片）。在这个示例中，我去google images，寻找爆炸图片，选择我最喜欢的图片，然后从图片上切割[一片具有正确渐变的图像](/images/vertex-displacement-with-a-noise-function/explosion.png)。
 
-现在我们有了爆炸的图像，我们必须将它传递给着色器才能使用它。这是在JavaScript中完成的，我们必须修改我们之前创建的`ShaderMaterial`。我们添加一个定义纹理的`uniform`（2D采样器）。我们还添加了一个时间系数来为爆炸制作动画。记住所有用于`uniform`类型的three.js约定不是一件容易的事：这是一个好帮手：[Uniform types](https://github.com/mrdoob/three.js/wiki/Uniforms-types)*（译注：原文中的此链接已经失效，可以访问[这个页面](https://threejs.org/docs/#api/en/core/Uniform)查询uniform types）*。
+现在我们有了爆炸的图像，我们必须将它传递给着色器才能使用。这是在JavaScript中完成的，我们必须修改我们之前创建的`ShaderMaterial`。我们添加一个定义纹理的`uniform`（2D采样器）。我们还添加了一个时间系数来为爆炸制作动画。记住所有用于`uniform`类型的three.js约定不是一件容易的事：[Uniform types](https://github.com/mrdoob/three.js/wiki/Uniforms-types)一个好帮手*（译注：原文中的此链接已经失效，可以访问[这个页面](https://threejs.org/docs/#api/en/core/Uniform)查询uniform types）*。
 
 ```javascript
 // Custom shader material for texturing | 自定义用于纹理的着色器材质
@@ -366,9 +366,9 @@ material = new THREE.ShaderMaterial( {
 } );
 ```
 
-*我已经更新了代码，使用新的three.js表示法来指定`uniform`中的纹理。*
+*我已经更新了代码，使用新的three.js表示法来指定`uniforms`中的纹理。*
 
-我们在`render`函数中添加进首先要做的事，因此需要更新uniform中指定的时间变量。
+我们在`render`函数中添加进首先要做的事，即需要更新`uniforms`中指定的时间变量。
 
 ```javascript
 // Passing time value to shader | 将时间值传递进着色器
@@ -406,9 +406,9 @@ float turbulence( vec3 p ) {
 
 void main() {
 
-vUv = uv;
+  vUv = uv;
 
-  // add time to the noise parameters so it's animated
+  // add time to the noise parameters so it's animated | 将时间添加到噪点中使它动起来
   noise = 10.0 *  -.10 * turbulence( .5 * normal + time );
   float b = 5.0 * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
   float displacement = - noise + b;
@@ -435,10 +435,10 @@ float random( vec3 scale, float seed ){
 
 void main() {
 
-  // get a random offset
+  // get a random offset | 获取随机偏移
   float r = .01 * random( vec3( 12.9898, 78.233, 151.7182 ), 0.0 );
-  // lookup vertically in the texture, using noise and offset
-  // to get the right RGB colour
+  // lookup vertically in the texture, using noise and offset | 垂直方向上查找纹理，使用噪点和偏移
+  // to get the right RGB colour | 获取正确的RGB色值
   vec2 tPos = vec2( 0, 1.3 * noise + r );
   vec4 color = texture2D( tExplosion, tPos );
 
@@ -468,7 +468,7 @@ void main() {
 
 如果你对许多“随机”的值感到疑惑，不要认为它们是魔术、或无法理解的数字。在获得正确的外观和感觉之前，所有的一切都需要进行实验。
 
-我可以向你保证，没有人能够在第一时间获得正确的值，都是在经过无数次修补和迭代之后才能获得的。事实上，很多实验得到的是一个完全不同且意想不到的结果。所以不要绝望。**你可能会失去一个火球，但你可能会赢得一个......[粘糊糊的西兰花](https://www.clicktorelease.com/code/perlin/green.html)**？。
+我可以向你保证，没有人能够在第一时间获得正确的值，都是在经过无数次修补和迭代之后才获得的。事实上，很多实验得到的是一个完全不同且意想不到的结果。所以不要绝望。**你可能会失去一个火球，但你可能会赢得一个......[粘糊糊的西兰花](https://www.clicktorelease.com/code/perlin/green.html)**？。
 
 您可以看到使用这种简单技术在其他示例中的应用：[**Experiments with Perlin Noise Series**](https://www.clicktorelease.com/blog/experiments-with-perlin-noise)，或者一个更精致的例子：[**It's a Halloween Message**](http://www.itsamessage.com/halloween2012)。
 
@@ -486,11 +486,13 @@ void main() {
 
 Interpreted by [Xie Huating](https://github.com/xiehuating/), 2019-04-29
 
-转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js/) 与 [**翻译出处**](https://github.com/xiehuating/creating-spherical-environment-mapping-shader)
+转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js/) 与 [**翻译出处**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Vertex%20displacement%20with%20a%20noise%20function%20using%20GLSL%20and%20threejs.md)
 
 <br/>
 
 <br/>
 
 <br/>
+
+
 

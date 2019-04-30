@@ -252,10 +252,11 @@ void main() {
 
 Interpreted by [Xie Huating](https://github.com/xiehuating/), 2019-04-22
 
-转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/) 与 [**翻译出处**](https://github.com/xiehuating/creating-spherical-environment-mapping-shader)
+转载此文请注明 [**原文出处**](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/) 与 [**翻译出处**](https://github.com/xiehuating/translation-of-clicktorelease.com-blogs/blob/master/Creating%20a%20Spherical%20Reflection%20Environment%20Mapping%20shader.md)
 
 <br/>
 
 <br/>
 
 <br/>
+
